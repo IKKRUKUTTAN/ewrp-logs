@@ -1,1 +1,37 @@
-vsv
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Video</title>
+    <style>
+        body { text-align: center; margin-top: 50px; }
+        #videoContainer { display: none; margin-top: 20px; }
+        iframe { width: 80%; max-width: 800px; height: 450px; border: none; }
+    </style>
+</head>
+<body>
+
+    <h2>Click the button to play the video 🎥</h2>
+    <button onclick="playVideo()">▶ Play Video</button>
+    
+    <!-- YouTube Video Container -->
+    <div id="videoContainer">
+        <iframe id="myVideo" src="" allowfullscreen></iframe>
+    </div>
+
+    <script>
+        function playVideo() {
+            let videoContainer = document.getElementById("videoContainer");
+            let video = document.getElementById("myVideo");
+
+            // Set YouTube embed URL
+            video.src = "https://www.youtube.com/embed/I7ALcwcCX5U?autoplay=1";
+            
+            // Show the video container
+            videoContainer.style.display = "block";
+        }
+    </script>
+
+</body>
+</html>
