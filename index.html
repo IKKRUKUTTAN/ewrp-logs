@@ -22,16 +22,29 @@
 </head>
 <body>
 
-    <!-- Video Element (Auto-Play, No Controls) -->
-    <video id="myVideo" autoplay muted playsinline>
+    <!-- Video Element (Auto-Play, Unmuted) -->
+    <video id="myVideo" autoplay playsinline>
         <source src="https://www.dropbox.com/scl/fi/l4hb4y5fgn47lfz07xbxo/Thoomanje-mayalle-meme-template.mp4?rlkey=gqxz2bxuwfvidtzytei9t38zr&st=9ugiliff&dl=1" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
     <script>
-        document.getElementById("myVideo").onended = function() {
-            window.location.href = "thankyou.html"; // Redirect after video ends
-        };
+        // Wait for the video to be loaded, then unmute and play it
+        document.addEventListener("DOMContentLoaded", function () {
+            let video = document.getElementById("myVideo");
+
+            // Try to play with sound
+            video.muted = false;
+            video.volume = 1.0;
+            video.play().catch(error => {
+                console.warn("Autoplay with sound blocked. User interaction required.");
+            });
+
+            // Redirect when video ends
+            video.onended = function() {
+                window.location.href = "thankyou.html"; 
+            };
+        });
     </script>
 
 </body>
