@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EW:RP Admin Panel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="login-box">
+    <h2>Admin Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+  </div>
+
+  <div id="panel" style="display: none;">
+    <aside>
+      <h3>📁 Logs</h3>
+      <ul>
+        <li onclick="loadLog('ban.log')">Ban Logs</li>
+        <li onclick="loadLog('banned.log')">Unban Logs</li>
+        <li onclick="loadLog('accepted.log')">Accepted Whitelists</li>
+        <li onclick="loadLog('declined.log')">Declined Whitelists</li>
+      </ul>
+    </aside>
+
+    <main>
+      <pre id="logDisplay">Select a log file to view</pre>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
