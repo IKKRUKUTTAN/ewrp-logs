@@ -1,7 +1,7 @@
 const apiBase = "https://raw.githubusercontent.com/RIGHTGAMER/ewrp-logs/main";
 const sessionDuration = 5 * 60 * 1000; // 5 minutes in ms
 
-// ✅ Attempt session restore
+// ✅ On load: try to resume session
 window.onload = () => {
   const session = localStorage.getItem("panel_session");
   const expire = localStorage.getItem("panel_expiry");
@@ -9,7 +9,7 @@ window.onload = () => {
   if (session === "active" && expire && Date.now() < parseInt(expire)) {
     showPanel();
   } else {
-    logout(); // auto-expired
+    showLogin(); // show login page instead of reloading
   }
 };
 
@@ -22,11 +22,17 @@ function login() {
     return;
   }
 
-  // ✅ Set session with 5 min expiry
+  // ✅ Start new session
   localStorage.setItem("panel_session", "active");
   localStorage.setItem("panel_expiry", (Date.now() + sessionDuration).toString());
 
   showPanel();
+}
+
+function logout() {
+  localStorage.removeItem("panel_session");
+  localStorage.removeItem("panel_expiry");
+  showLogin(); // avoid reload spam
 }
 
 function showPanel() {
@@ -34,10 +40,9 @@ function showPanel() {
   document.getElementById('panel').style.display = 'flex';
 }
 
-function logout() {
-  localStorage.removeItem("panel_session");
-  localStorage.removeItem("panel_expiry");
-  location.reload();
+function showLogin() {
+  document.getElementById('login-box').style.display = 'flex';
+  document.getElementById('panel').style.display = 'none';
 }
 
 let currentLog = '';
@@ -74,5 +79,11 @@ function fetchLog() {
 
 // 🔁 Auto-refresh logs every 5 seconds
 setInterval(() => {
-  if (currentLog) fetchLog();
+  const session = localStorage.getItem("panel_session");
+  const expire = localStorage.getItem("panel_expiry");
+  if (session === "active" && Date.now() < parseInt(expire)) {
+    if (currentLog) fetchLog();
+  } else {
+    logout(); // expire session cleanly
+  }
 }, 5000);
