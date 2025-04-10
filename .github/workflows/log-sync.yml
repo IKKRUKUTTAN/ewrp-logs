@@ -3,35 +3,25 @@ name: Sync Logs to GitHub
 on:
   push:
     branches:
-      - main  # Trigger on changes pushed to the main branch
-  schedule:
-    - cron: "0 * * * *"  # Optional: Run the action once an hour (automatically)
+      - main
+    paths:
+      - 'logs/**'  # This watches the logs folder for changes
 
 jobs:
   sync_logs:
     runs-on: ubuntu-latest
+
     steps:
-      # Step 1: Checkout the repository to work with
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Step 2: Set up Git with user info
-      - name: Set up Git config
+      - name: Set up Git
         run: |
-          git config --global user.name "Ikkru"
           git config --global user.email "sreeharikvsreehari9@gmail.com"
+          git config --global user.name "IKKRU"
 
-      # Step 3: Add changes in the logs folder
-      - name: Add changes to Git
+      - name: Add, commit, and push logs to GitHub
         run: |
           git add logs/
-
-      # Step 4: Commit changes if there are any
-      - name: Commit changes
-        run: |
-          git commit -m "Sync logs to GitHub" || echo "No changes to commit"
-
-      # Step 5: Push the changes to GitHub
-      - name: Push changes to GitHub
-        run: |
-          git push origin main
+          git commit -m "Sync logs"
+          git push
