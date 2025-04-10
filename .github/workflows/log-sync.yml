@@ -18,8 +18,8 @@ jobs:
       # Step 2: Set up Git with user info
       - name: Set up Git config
         run: |
-          git config --global user.name "Your Name"
-          git config --global user.email "your.email@example.com"
+          git config --global user.name "Ikkru"
+          git config --global user.email "sreeharikvsreehari9@gmail.com"
 
       # Step 3: Add changes in the logs folder
       - name: Add changes to Git
