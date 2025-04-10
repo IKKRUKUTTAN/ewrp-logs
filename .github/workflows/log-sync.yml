@@ -5,13 +5,13 @@ on:
     branches:
       - main  # Trigger on changes pushed to the main branch
   schedule:
-    - cron: "0 * * * *"  # Run the action once an hour (optional)
+    - cron: "0 * * * *"  # Optional: Run the action once an hour (automatically)
 
 jobs:
   sync_logs:
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Check out the repository to work with
+      # Step 1: Checkout the repository to work with
       - name: Checkout repository
         uses: actions/checkout@v2
 
