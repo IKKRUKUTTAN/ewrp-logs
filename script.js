@@ -1,4 +1,4 @@
-const apiBase = "https://raw.githubusercontent.com/RIGHTGAMER/ewrp-logs/main/logs"; // Updated URL to fetch logs
+const apiBase = "https://raw.githubusercontent.com/RIGHTGAMER/ewrp-logs/main/logs";
 
 function login() {
   const user = document.getElementById('username').value;
@@ -13,43 +13,28 @@ function login() {
   document.getElementById('panel').style.display = 'flex';
 }
 
-let currentLog = '';  // Store the current log file to fetch
-
+let currentLog = '';
 function loadLog(logName) {
-  currentLog = logName; // Set the selected log file name
-  fetchLog();  // Fetch and display the log data
-}
-
-function loadLogPrompt() {
-  const date = prompt('Enter log file name (e.g. 10-04-2025.log):');
-  if (date) loadLog(date);  // If date is entered, load that log
+  currentLog = logName;
+  fetchLog();
 }
 
 function fetchLog() {
-  if (!currentLog) return;  // If no log is selected, exit the function
-
-  // Construct the URL for fetching the log file from GitHub
-  const logUrl = `${apiBase}/${currentLog}`;
-
-  // Fetch the log file from GitHub using the constructed URL
-  fetch(logUrl, {
-    headers: {
-      'Authorization': 'Basic ' + btoa('admin:IKKRUDEV') // Optional: Authentication
-    }
-  })
-  .then(res => {
-    if (!res.ok) throw new Error('Failed to load log.');  // If there's an error fetching, throw an error
-    return res.text();  // Otherwise, return the log content as text
-  })
-  .then(data => {
-    document.getElementById('logDisplay').textContent = data;  // Display the log content
-  })
-  .catch(err => {
-    document.getElementById('logDisplay').textContent = `Error: ${err.message}`;  // Display any errors
-  });
+  if (!currentLog) return;
+  fetch(`${apiBase}/${currentLog}`)
+    .then(res => {
+      if (!res.ok) throw new Error('Failed to load log.');
+      return res.text();
+    })
+    .then(data => {
+      document.getElementById('logDisplay').textContent = data;
+    })
+    .catch(err => {
+      document.getElementById('logDisplay').textContent = `Error: ${err.message}`;
+    });
 }
 
-// Auto-refresh logs every 5s (optional, remove if unnecessary)
+// Auto-refresh logs every 5s
 setInterval(() => {
-  if (currentLog) fetchLog();  // Automatically fetch the log every 5 seconds if one is selected
+  if (currentLog) fetchLog();
 }, 5000);
