@@ -3,73 +3,72 @@ body {
     margin: 0;
     background-color: #1e1e2f;
     color: white;
-  }
+}
   
-  #login-box {
+#login-box {
     width: 300px;
     margin: 10% auto;
     padding: 20px;
     background: #2c2c3e;
     border-radius: 10px;
     text-align: center;
-  }
+}
   
-  #login-box input {
+#login-box input {
     width: 90%;
     padding: 10px;
     margin: 8px 0;
     border: none;
     border-radius: 5px;
-  }
+}
   
-  #login-box button {
+#login-box button {
     padding: 10px 20px;
     background: #4caf50;
     border: none;
     color: white;
     border-radius: 5px;
     cursor: pointer;
-  }
+}
   
-  #panel {
+#panel {
     display: flex;
     height: 100vh;
-  }
+}
   
-  aside {
+aside {
     width: 220px;
     background: #272738;
     padding: 20px;
     box-shadow: 2px 0 8px rgba(0,0,0,0.5);
-  }
+}
   
-  aside ul {
+aside ul {
     list-style: none;
     padding: 0;
-  }
+}
   
-  aside li {
+aside li {
     padding: 10px;
     margin: 5px 0;
     background: #3a3a4d;
     border-radius: 4px;
     cursor: pointer;
-  }
+}
   
-  aside li:hover {
+aside li:hover {
     background: #4caf50;
-  }
+}
   
-  main {
+main {
     flex-grow: 1;
     padding: 20px;
     overflow-y: auto;
-  }
+}
   
-  pre {
+pre {
     background: #111;
     padding: 20px;
     border-radius: 5px;
     white-space: pre-wrap;
-  }
-  
+}
