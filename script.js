@@ -1,4 +1,4 @@
-const apiBase = "https://raw.githubusercontent.com/RIGHTGAMER/ewrp-logs/main";
+const apiBase = "https://raw.githubusercontent.com/RIGHTGAMER/ewrp-logs/main/logs";
 
 function login() {
   const user = document.getElementById('username').value;
@@ -19,26 +19,22 @@ function loadLog(logName) {
   fetchLog();
 }
 
-function loadLogPrompt() {
-  const date = prompt('Enter log file name (e.g. 10-04-2025.log):');
-  if (date) loadLog(date);
-}
-
 function fetchLog() {
   if (!currentLog) return;
-  fetch(${apiBase}/logs/${currentLog}, {
-    headers: {
-      'Authorization': 'Basic ' + btoa('admin:IKKRUDEV')
-    }
-  })
-  .then(res => {
-    if (!res.ok) throw new Error('Failed to load log.');
-    return res.text();
-  })
-  .then(data => {
-    document.getElementById('logDisplay').textContent = data;
-  })
-  .catch(err => {
-    document.getElementById('logDisplay').textContent = Error: ${err.message};
-  });
+  fetch(`${apiBase}/${currentLog}`)
+    .then(res => {
+      if (!res.ok) throw new Error('Failed to load log.');
+      return res.text();
+    })
+    .then(data => {
+      document.getElementById('logDisplay').textContent = data;
+    })
+    .catch(err => {
+      document.getElementById('logDisplay').textContent = `Error: ${err.message}`;
+    });
 }
+
+// Auto-refresh logs every 5s
+setInterval(() => {
+  if (currentLog) fetchLog();
+}, 5000);
