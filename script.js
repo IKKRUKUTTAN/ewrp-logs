@@ -1,59 +1,55 @@
-const apiBase = "https://raw.githubusercontent.com/RIGHTGAMER/ewrp-logs/main/logs"; // Correct the path to 'logs/'
+const apiBase = "https://raw.githubusercontent.com/RIGHTGAMER/ewrp-logs/main/logs"; // Updated URL to fetch logs
 
 function login() {
   const user = document.getElementById('username').value;
   const pass = document.getElementById('password').value;
 
-  // Checking the login credentials
   if (user !== 'admin' || pass !== 'IKKRUDEV') {
     alert('Wrong credentials');
     return;
   }
 
-  // Hide login box and show panel after successful login
   document.getElementById('login-box').style.display = 'none';
   document.getElementById('panel').style.display = 'flex';
 }
 
-let currentLog = ''; // Track the current log being viewed
+let currentLog = '';  // Store the current log file to fetch
 
-// Function to load a specific log based on file name
 function loadLog(logName) {
-  currentLog = logName;
-  fetchLog();
+  currentLog = logName; // Set the selected log file name
+  fetchLog();  // Fetch and display the log data
 }
 
-// Prompt for entering log file name
 function loadLogPrompt() {
   const date = prompt('Enter log file name (e.g. 10-04-2025.log):');
-  if (date) loadLog(date);
+  if (date) loadLog(date);  // If date is entered, load that log
 }
 
-// Fetch the log from GitHub repository
 function fetchLog() {
-  if (!currentLog) return; // If no log selected, do nothing
+  if (!currentLog) return;  // If no log is selected, exit the function
 
-  // Fetch the log file from the GitHub repository
-  fetch(`${apiBase}/${currentLog}`, {
+  // Construct the URL for fetching the log file from GitHub
+  const logUrl = `${apiBase}/${currentLog}`;
+
+  // Fetch the log file from GitHub using the constructed URL
+  fetch(logUrl, {
     headers: {
-      'Authorization': 'Basic ' + btoa('admin:IKKRUDEV') // Basic auth (username:password) encoded in base64
+      'Authorization': 'Basic ' + btoa('admin:IKKRUDEV') // Optional: Authentication
     }
   })
   .then(res => {
-    if (!res.ok) throw new Error('Failed to load log.');
-    return res.text();
+    if (!res.ok) throw new Error('Failed to load log.');  // If there's an error fetching, throw an error
+    return res.text();  // Otherwise, return the log content as text
   })
   .then(data => {
-    // Display the log content in the logDisplay element
-    document.getElementById('logDisplay').textContent = data;
+    document.getElementById('logDisplay').textContent = data;  // Display the log content
   })
   .catch(err => {
-    // In case of error, display the error message
-    document.getElementById('logDisplay').textContent = `Error: ${err.message}`;
+    document.getElementById('logDisplay').textContent = `Error: ${err.message}`;  // Display any errors
   });
 }
 
-// Auto-refresh logs every 5 seconds to keep them updated
+// Auto-refresh logs every 5s (optional, remove if unnecessary)
 setInterval(() => {
-  if (currentLog) fetchLog();
+  if (currentLog) fetchLog();  // Automatically fetch the log every 5 seconds if one is selected
 }, 5000);
